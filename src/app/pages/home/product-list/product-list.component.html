@@ -1,0 +1,12 @@
+<ng-container *ngIf=" products$ | async as  products">
+    <mat-card>
+        <mat-card-title>List Of Products</mat-card-title>
+        <app-product (selectedProduct)="selectedProductId($event)" [product]="product" *ngFor="let product of products">
+        </app-product>
+    </mat-card>
+</ng-container>
+
+<div class="alert alert-danger" *ngIf="errorMessage$ | async as errorMessage">
+        Not able to fetch the data at the moment. Please try again later.
+</div>
+<span class="fa fa-spinner spinner" *ngIf="loading$ | async"></span>

@@ -1,0 +1,7 @@
+{
+    "/products": {
+      "target": "https://ds-ecom.azurewebsites.net",
+      "secure": false
+    },
+    "changeOrigin": true
+  }

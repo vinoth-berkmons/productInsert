@@ -1,0 +1,50 @@
+<mat-card *ngIf="productInfo" >
+    <mat-card-header>
+        <mat-card-title>Insert {{categoryType | uppercase}}</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="row ">
+        <div class="col-sm-12">
+            <form class="row example-container" [formGroup]="insertProductForm" autocomplete="off">
+                <ng-container [ngSwitch]="product.type" *ngFor="let product of productInfo">
+                    <ng-container *ngSwitchCase="'text'">
+                        <mat-form-field>
+                            <input type="text" formControlName="{{product.caption}}" matInput
+                                placeholder="{{product.caption}}" value="{{product.defaultValue}}"
+                                [required]="product.mandatory">
+                            <mat-hint align="start"><strong>{{product.validationMessage}}</strong> </mat-hint>
+                        </mat-form-field>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'int'">
+                        <mat-form-field>
+                            <input type="number" formControlName="{{product.caption}}" matInput
+                                placeholder="{{product.caption}}" value="{{product.defaultValue}}"
+                                [required]="product.mandatory">
+                            <mat-hint align="start"><strong>{{product.validationMessage}}</strong> </mat-hint>
+                        </mat-form-field>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'bool'">
+                        <mat-checkbox [required]="" formControlName="{{product.caption}}"
+                            [required]="product.mandatory">{{product.caption}}</mat-checkbox>
+                            <mat-error *ngIf="product.mandatory" >
+                                <strong>{{product.caption}} {{product.validationMessage ? product.validationMessage : 'is mandatory'}}</strong> </mat-error>
+                       
+                    </ng-container>
+
+                </ng-container>
+
+            </form>
+        </div>
+
+    </mat-card-content>
+    <mat-card-footer class="row">
+        <div class="card_footer">
+            <button mat-raised-button (click)="insertProduct('CANCEL')" class="insert_cancel">Cancel</button>
+            <button mat-raised-button (click)="insertProduct('CREATE')" color="primary">Create</button>
+        </div>
+    </mat-card-footer>
+</mat-card>
+
+<div class="alert alert-danger" *ngIf="errorMessage$ | async as errorMessage">
+        Not able to fetch the data at the moment. Please try again later.
+</div>
